@@ -21,5 +21,9 @@ class DatabaseSeeder extends Seeder
             'role' => 'administrator',
             'password' => 'password',
         ]);
+        $this->call([
+            RecipeSeeder::class,
+        ]);
     }
 }
+
