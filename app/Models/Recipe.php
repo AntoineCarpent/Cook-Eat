@@ -13,12 +13,21 @@ class Recipe extends Model
     protected $fillable = [
         'title',
         'description',
-        'image'
+        'image',
+        'time',
+        'serving',
+        'ustensils',
+        'appliance'
     ];
 
     public function ingredient(): BelongsToMany
     {
-        return $this->belongsToMany(Ingredient::class);
+        return $this->belongsToMany(Ingredient::class, 'recipe_ingredients');
+    }
+
+    public function user(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
     }
 
     public function favoritedBy(): BelongsToMany
