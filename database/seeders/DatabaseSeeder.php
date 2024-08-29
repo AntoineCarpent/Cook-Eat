@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
             'role' => 'administrator',
             'password' => 'password',
         ]);
+
     }
 }

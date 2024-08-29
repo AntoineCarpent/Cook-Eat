@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Recipe extends Model
 {
@@ -20,9 +21,9 @@ class Recipe extends Model
         return $this->belongsToMany(Ingredient::class);
     }
 
-    public function user(): BelongsToMany
+    public function favoritedBy(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'favorites');
     }
 
 }
