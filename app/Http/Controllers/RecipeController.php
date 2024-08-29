@@ -26,13 +26,18 @@ class RecipeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image',
             'time' => 'nullable|string',
             'serving' => 'nullable|string',
             'ustensils' => 'nullable|string',
             'appliance' => 'nullable|string',
             'ingredients' => 'array'
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $validatedData['image'] = $path;
+        }
     
         $recipe = Recipe::create($validatedData);
         $recipe->ingredient()->attach($request->input('ingredients'));
@@ -66,7 +71,12 @@ public function update(Request $request, string $id)
     $request->validate([
         'title' => 'required|max:255',
         'description' => 'required|string',
-     
+        'image' => 'nullable|image',
+        'time' => 'nullable|string',
+        'serving' => 'nullable|string',
+        'ustensils' => 'nullable|string',
+        'appliance' => 'nullable|string',
+        'ingredients' => 'array'
     ]);
 
     $recipe = Recipe::find($id);        
