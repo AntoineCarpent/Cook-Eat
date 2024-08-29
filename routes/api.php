@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\UserController;
+
 
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -25,3 +27,24 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     Route::put('/ingredients/{id}', [IngredientController::class, 'update']);
     Route::delete('/ingredients/{id}', [IngredientController::class, 'destroy']); 
 
+
+Route::get('/', function () {
+    return 'Hello World';
+});
+
+Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::post('/login', [UserController::class, 'login'])->name('login');
+
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');  
+
+});
