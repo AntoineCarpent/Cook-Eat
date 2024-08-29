@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
+            $table->text('time');
+            $table->text('serving');
             $table->text('image');
+            $table->text('ustensils');
+            $table->text('appliance');
             $table->timestamps();
         });
     }
