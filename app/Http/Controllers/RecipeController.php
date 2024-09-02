@@ -40,13 +40,19 @@ class RecipeController extends Controller
         }
     
         $recipe = Recipe::create($validatedData);
-        $recipe->ingredient()->attach($request->input('ingredients'));
-    
+
+        $ingredients = $request->input('ingredients');
+            foreach ($ingredients as $ingredient) {
+                $recipe->ingredient()->attach($ingredient['id'], 
+                ['quantity' => $ingredient['quantity'],
+                'unit' => $ingredient['unit']
+            ]);
+        }
         return response()->json([
             'recipe' => $recipe
-        ]);
-    }
-    
+    ]);
+}
+
     /**
      * Display the specified resource.
      */
@@ -87,10 +93,17 @@ public function update(Request $request, string $id)
 
     $recipe = Recipe::find($id);        
     $recipe->update($request->all());
-
-    return response()->json([
-        'recipe' => $recipe
+    $ingredients = $request->input('ingredients');
+                foreach ($ingredients as $ingredient) {
+                    $recipe->ingredient()->attach($ingredient['id'], 
+                    ['quantity' => $ingredient['quantity'],
+                    'unit' => $ingredient['unit']
+                    ]);
+            }
+        return response()->json([
+            'recipe' => $recipe
     ]);
+
 }
 
 
