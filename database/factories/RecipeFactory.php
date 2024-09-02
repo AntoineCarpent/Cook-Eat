@@ -17,7 +17,9 @@ class RecipeFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+
+
+        public function definition()
     {
         return [
             'title' => $this->faker->sentence,
@@ -29,4 +31,10 @@ class RecipeFactory extends Factory
             'appliance' => $this->faker->word,
         ];
     }
+
+    public function withSpecificData($data)
+    {
+        return $this->state($data);
+    }
+    
 }
