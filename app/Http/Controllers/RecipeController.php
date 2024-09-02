@@ -26,13 +26,18 @@ class RecipeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image',
             'time' => 'nullable|string',
             'serving' => 'nullable|string',
             'ustensils' => 'nullable|string',
             'appliance' => 'nullable|string',
             'ingredients' => 'array'
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $validatedData['image'] = $path;
+        }
     
         $recipe = Recipe::create($validatedData);
 
@@ -70,18 +75,21 @@ class RecipeController extends Controller
 public function update(Request $request, string $id)
 {
     $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'nullable|string',
-            'time' => 'nullable|string',
-            'serving' => 'nullable|string',
-            'ustensils' => 'nullable|string',
-            'appliance' => 'nullable|string',
-            'ingredients' => 'array'
-            
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'image' => 'nullable|image',
+        'time' => 'nullable|string',
+        'serving' => 'nullable|string',
+        'ustensils' => 'nullable|string',
+        'appliance' => 'nullable|string',
+        'ingredients' => 'array'
     ]);
 
-
+    
+    if ($request->hasFile('image')) {
+        $path = $request->file('image')->store('images', 'public');
+        $validatedData['image'] = $path;
+    }
 
     $recipe = Recipe::find($id);        
     $recipe->update($request->all());
