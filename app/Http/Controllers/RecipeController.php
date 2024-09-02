@@ -59,7 +59,8 @@ class RecipeController extends Controller
     public function show(string $id)
     {
     
-        $recipe = Recipe::find($id);
+        $recipe = Recipe::with('ingredient')->find($id);
+
         return response()->json([
             'recipes' => $recipe,
             ]);
