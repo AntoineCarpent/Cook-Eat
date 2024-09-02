@@ -24,7 +24,6 @@ class UserController extends Controller
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'role' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required'],
@@ -38,7 +37,13 @@ class UserController extends Controller
             ], 401);
         }
 
-        $user = User::create($request->all());
+        $user = User::create([
+            'name' => $request->name,
+            'role' => 'user', // Définir le rôle par défaut sur "user"
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        
         $token = $user->createToken("API TOKEN")->plainTextToken;
         
         return response()->json([
@@ -104,6 +109,42 @@ class UserController extends Controller
         $user->update($request->all());
         return $user;
     }
+
+    public function isAdmin()
+    {
+        $user = Auth::user();
+        
+        if ($user->role === 'user') {
+            return response()->json([
+                'response'=>false,
+            ]);
+        } else if ($user->role === "administrator") {
+            return response()->json([
+                'response'=>true,
+            ]);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            // Révoquer tous les tokens de l'utilisateur
+            $user->tokens()->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Logout successful',
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'User not authenticated',
+        ], 401);
+    }
+
 
     /**
      * Remove the specified resource from storage.
