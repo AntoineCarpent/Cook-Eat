@@ -24,7 +24,6 @@ class UserController extends Controller
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'role' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required'],
@@ -38,7 +37,13 @@ class UserController extends Controller
             ], 401);
         }
 
-        $user = User::create($request->all());
+        $user = User::create([
+            'name' => $request->name,
+            'role' => 'user', // Définir le rôle par défaut sur "user"
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        
         $token = $user->createToken("API TOKEN")->plainTextToken;
         
         return response()->json([
