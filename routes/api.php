@@ -17,6 +17,11 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
+// ---------------------------------------------------------------------------------------
+Route::get('/recipes', [RecipeController::class, 'index']);
+
+Route::get('/recipes/{id}', [RecipeController::class, 'show']); 
+// ---------------------------------------------------------------------------------------
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -39,9 +44,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/favorites', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
 
   
-    Route::get('/recipes', [RecipeController::class, 'index']); 
   
-    Route::get('/recipes/{id}', [RecipeController::class, 'show']); 
+    
 
     Route::post('/recipes', [RecipeController::class, 'store']); 
 
