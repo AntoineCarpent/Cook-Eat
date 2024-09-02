@@ -39,6 +39,8 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('/isadmin', [UserController::class, 'isAdmin'])->name('users.isadmin');
     
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
 

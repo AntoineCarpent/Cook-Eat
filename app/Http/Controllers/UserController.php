@@ -105,6 +105,22 @@ class UserController extends Controller
         return $user;
     }
 
+    public function isAdmin()
+    {
+        $user = Auth::user();
+        
+        if ($user->role === 'user') {
+            return response()->json([
+                'response'=>false,
+            ]);
+        } else if ($user->role === "administrator") {
+            return response()->json([
+                'response'=>true,
+            ]);
+        }
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
