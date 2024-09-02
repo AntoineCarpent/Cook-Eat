@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
-            $table->text('time');
-            $table->text('serving');
+            $table->text('time')->nullable();
+            $table->text('serving')->nullable();
             $table->text('image')->nullable();
-            $table->text('ustensils');
-            $table->text('appliance');
+            $table->text('ustensils')->nullable();
+            $table->text('appliance')->nullable();
             $table->timestamps();
         });
     }
