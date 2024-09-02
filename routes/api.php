@@ -37,6 +37,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
 
+    Route::post('/logout', [UserController::class, 'logout'])->name('users.logout');
+
     
     Route::post('/favorites', [FavoriteController::class, 'store'])->name('favorites.store');
     

@@ -120,6 +120,26 @@ class UserController extends Controller
         }
     }
 
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            // Révoquer tous les tokens de l'utilisateur
+            $user->tokens()->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Logout successful',
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'User not authenticated',
+        ], 401);
+    }
+
 
     /**
      * Remove the specified resource from storage.
