@@ -17,7 +17,7 @@ return new class extends Migration
             $table->longText('description');
             $table->text('time')->nullable();
             $table->text('serving')->nullable();
-            $table->text('image')->nullable()->nullable();
+            $table->text('image')->nullable();
             $table->text('ustensils')->nullable();
             $table->text('appliance')->nullable();
             $table->timestamps();
