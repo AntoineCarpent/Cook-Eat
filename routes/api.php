@@ -43,9 +43,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::delete('/favorites', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
 
-  
-  
-    
+
 
     Route::post('/recipes', [RecipeController::class, 'store']); 
 
