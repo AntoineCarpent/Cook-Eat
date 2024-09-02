@@ -27,24 +27,24 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/isadmin', [UserController::class, 'isAdmin'])->name('users.isadmin');
 
+
     
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-    
+
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-    
+
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
 
     Route::post('/logout', [UserController::class, 'logout'])->name('users.logout');
 
-    
+
     Route::post('/favorites', [FavoriteController::class, 'store'])->name('favorites.store');
-    
+
     Route::delete('/favorites', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
-
-
-
+  
+ 
     Route::post('/recipes', [RecipeController::class, 'store']); 
 
     Route::put('/recipes/{id}', [RecipeController::class, 'update']); 
